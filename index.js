@@ -1,16 +1,7 @@
-const tasks = [{
-    id: 1,
-    name: "task1",
-    isDone: false
-},
-{
-    id: 2,
-    name: "task2",
-    isDone: false
-}
-];
+const storage = new Storage(new SessionStorage);
+const tasksOnSession = storage.get("tasks")
 
-console.log(tasks);
+const tasks = tasksOnSession ? tasksOnSession : [];
 
 const form = document.querySelector("#tasks-form ");
 const listContainer = document.querySelector("#tasks-list-container");
@@ -27,6 +18,7 @@ const tasksRender = (tasks) => {
                 itemContainer.remove()
 
                 tasks = tasks.filter(t => t.id != idEl);
+                storage.set("tasks", tasks);
                 console.log(tasks);
             }
 
@@ -81,6 +73,9 @@ submitTask = (event) => {
         isDone: false
     };
     tasks.push(newElement);
+
+    storage.set("tasks", tasks);
+
     tasksRender([newElement]);
     form.reset();
 }
