@@ -17,21 +17,37 @@ const listContainer = document.querySelector("#tasks-list-container");
 
 const tasksRender = (tasks) => {
     tasks.forEach((task) => {
-        let itemContainer = document.createElement("div");
-        itemContainer.className = "item-container";
-        let labelEl = document.createElement("label");
-        let inputEl = document.createElement("input");
-        inputEl.type = "checkbox";
 
-        let buttonEl = document.createElement("button");
-        buttonEl.type = "button";
+        const createButtonEl = () => {
+            let buttonEl = document.createElement("button");
+            buttonEl.type = "button";
 
-        labelEl.appendChild(inputEl);
-        labelEl.append(task.name);
-        itemContainer.appendChild(labelEl);
-        itemContainer.appendChild(buttonEl);
+            return buttonEl;
+        }
 
-        listContainer.appendChild(itemContainer);
+        const createLabelEl = (tasks) => {
+            let labelEl = document.createElement("label");
+            let inputEl = document.createElement("input");
+            inputEl.type = "checkbox";
+
+            labelEl.appendChild(inputEl);
+            labelEl.append(task.name);
+
+            return labelEl;
+        }
+
+        const createItemContainer = () => {
+            let itemContainer = document.createElement("div");
+            itemContainer.className = "item-container";
+
+            itemContainer.appendChild(createLabelEl(tasks));
+            itemContainer.appendChild(createButtonEl());
+
+            return itemContainer;
+        }
+
+
+        listContainer.appendChild(createItemContainer());
         /*  return (`
                         <div class="item-container">
                             <label for="">
