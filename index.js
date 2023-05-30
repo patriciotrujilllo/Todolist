@@ -18,9 +18,17 @@ const listContainer = document.querySelector("#tasks-list-container");
 const tasksRender = (tasks) => {
     tasks.forEach((task) => {
 
-        const createButtonEl = () => {
+        const createButtonEl = (itemContainer) => {
             let buttonEl = document.createElement("button");
             buttonEl.type = "button";
+            buttonEl.append("-");
+            buttonEl.onclick = () => {
+                const idEl = itemContainer.id;
+                itemContainer.remove()
+
+                tasks = tasks.filter(t => t.id != idEl);
+                console.log(tasks);
+            }
 
             return buttonEl;
         }
@@ -39,9 +47,10 @@ const tasksRender = (tasks) => {
         const createItemContainer = () => {
             let itemContainer = document.createElement("div");
             itemContainer.className = "item-container";
+            itemContainer.id = task.id;
 
             itemContainer.appendChild(createLabelEl(tasks));
-            itemContainer.appendChild(createButtonEl());
+            itemContainer.appendChild(createButtonEl(itemContainer));
 
             return itemContainer;
         }
