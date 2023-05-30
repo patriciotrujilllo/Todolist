@@ -12,22 +12,37 @@ const tasks = [{
 
 console.log(tasks);
 
-const form = document.querySelector("#tasks-form");
+const form = document.querySelector("#tasks-form ");
 const listContainer = document.querySelector("#tasks-list-container");
 
 const tasksRender = (tasks) => {
-    let html = tasks.map((task) => {
-        return (`
-                    <div class="item-container">
-                        <label for="">
-                                <input type="checkbox" name="" id="">
-                                ${task.name}
-                        </label>
-                        <button type="button">-</button>
-                    </div>
-                    `)
+    tasks.forEach((task) => {
+        let itemContainer = document.createElement("div");
+        itemContainer.className = "item-container";
+        let labelEl = document.createElement("label");
+        let inputEl = document.createElement("input");
+        inputEl.type = "checkbox";
+
+        let buttonEl = document.createElement("button");
+        buttonEl.type = "button";
+
+        labelEl.appendChild(inputEl);
+        labelEl.append(task.name);
+        itemContainer.appendChild(labelEl);
+        itemContainer.appendChild(buttonEl);
+
+        listContainer.appendChild(itemContainer);
+        /*  return (`
+                        <div class="item-container">
+                            <label for="">
+                                    <input type="checkbox" name="" id="">
+                                    ${task.name}
+                            </label>
+                            <button type="button">-</button>
+                        </div>
+                        `) */
     })
-    listContainer.innerHTML = html.join("")
+    // listContainer.innerHTML = html.join("")
 }
 
 submitTask = (event) => {
@@ -35,13 +50,13 @@ submitTask = (event) => {
 
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData);
-
-    tasks.push({
+    const newElement = {
         id: tasks.length + 1,
         name: data.task,
         isDone: false
-    });
-    tasksRender(tasks);
+    };
+    tasks.push(newElement);
+    tasksRender([newElement]);
     form.reset();
 }
 
