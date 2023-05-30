@@ -12,8 +12,8 @@ const tasks = [{
 
 console.log(tasks);
 
-const form = document.querySelector("form");
-const listContainer = document.querySelector(".list-container");
+const form = document.querySelector("#tasks-form");
+const listContainer = document.querySelector("#tasks-list-container");
 
 const tasksRender = (tasks) => {
     let html = tasks.map((task) => {
