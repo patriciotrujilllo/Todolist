@@ -1,10 +1,12 @@
-const storage = new Storage(new SessionStorage);
+const storage = new Storage(new SessionStorage());
 const tasksOnSession = storage.get("tasks")
 
 const tasks = tasksOnSession ? tasksOnSession : [];
 
 const form = document.querySelector("#tasks-form ");
 const listContainer = document.querySelector("#tasks-list-container");
+const completedStats = document.querySelector("#completed-tasks");
+const totalStats = document.querySelector("#total-tasks");
 
 const tasksRender = (tasks) => {
     tasks.forEach((task) => {
@@ -62,7 +64,7 @@ const tasksRender = (tasks) => {
     // listContainer.innerHTML = html.join("")
 }
 
-submitTask = (event) => {
+const submitTask = (event) => {
     event.preventDefault();
 
     const formData = new FormData(event.target);
@@ -83,6 +85,9 @@ submitTask = (event) => {
 const contentLoaded = () => {
 
     tasksRender(tasks);
+    if (totalStats) {
+        totalStats.innerText = tasks.length;
+    };
 }
 document.addEventListener("DOMContentLoaded", contentLoaded);
 form.addEventListener("submit", submitTask);
